@@ -6,17 +6,11 @@
 //attendre dans la loop l'entrée utilisateur 
 //si il y a une entré utilisateur entré ici
 
-bool verifyUser(String username, String iduser) {
+bool verifyUser(String iduser) {
     // Ici, récupérez les informations de l'utilisateur depuis la base de données avec la fonction de bastien
     
-    if (username.length() != storedUsername.length() || iduser.length() != storedIdUser.length()) {
+    if (iduser.length() != storedIdUser.length()) {
         return 1;
-    }
-
-    for (int i = 0; i < username.length(); i++) {
-        if (username[i] != storedUsername[i]) {
-            return 1;
-        }
     }
 
     for (int i = 0; i < iduser.length(); i++) {
