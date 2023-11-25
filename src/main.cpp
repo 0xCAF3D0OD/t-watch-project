@@ -1,7 +1,4 @@
-#include <Arduino.h>
-#include <TWatch_hal.h>
-//"TWatch_config.h" needs to be configured in the library for the first time
-// This routine needs to annotate the LVGL GUI
+#include "main.hpp"
 
 TWatchClass *twatch = nullptr;
 TFT_eSPI *tft = nullptr;
@@ -20,6 +17,7 @@ void setup() {
   tft = twatch->tft_get_instance();
 
   Serial.begin(115200);
+  Serial1.begin(9600); // rfid
   twatch->motor_shake(2, 50);
 
   tft->fillScreen(TFT_BLACK);
@@ -43,6 +41,7 @@ void loop() {
     xEventGroupClearBits(twatch->_Hal_IRQ_event, TOUCH_IRQ_BIT);
     point_x = twatch->touch_getX();
     point_y = twatch->touch_getY();
+	backend();
     sprintf(buf, "Hello World");
     sprintf(buf, "ce sont les zouzous");
     tft->drawString(buf, 80, 118);

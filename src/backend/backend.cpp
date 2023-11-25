@@ -1,7 +1,6 @@
-#include <iostream>
+#include "backend.hpp"
 
-int main (void){
-    printf("hello");
-printf("test\n");
-    return (0);
+void	backend()
+{
+	rfid();
 }
