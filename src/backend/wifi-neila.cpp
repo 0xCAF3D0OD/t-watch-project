@@ -1,6 +1,6 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
-#include <ArduinoJson.h>
+// #include <ArduinoJson.h>
 #include <TWatch_hal.h>
 
 // Paramètres Wi-Fi
