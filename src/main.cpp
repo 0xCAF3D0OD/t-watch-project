@@ -8,14 +8,11 @@ char buf[128];
 int analogValue = 0; 
 
 void setup() {
-  // backend();
   analogValue = analogRead(0);
   twatch = TWatchClass::getWatch();
   tft = twatch->tft_get_instance();
 
   Serial.begin(115200);
-  Serial.println("01");
-  Serial.println("hello ca va comment tu as eu ca");
   twatch->motor_shake(2, 50);
 
   tft->fillScreen(TFT_BLACK);
@@ -28,12 +25,12 @@ void setup() {
   tft->setTextFont(2);
   tft->setTextColor(TFT_WHITE, TFT_BLACK);
   tft->drawString("T-Watch Touch Test", 62, 90);
+  backend();
 }
 
 void loop() {
   if (xEventGroupGetBits(twatch->_Hal_IRQ_event) & TOUCH_IRQ_BIT) {
     xEventGroupClearBits(twatch->_Hal_IRQ_event, TOUCH_IRQ_BIT);
-	  // backend();
     tft->drawString(buf, 80, 118);
   }
   Serial.print("1");
