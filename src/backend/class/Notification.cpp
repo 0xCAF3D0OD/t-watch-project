@@ -1,6 +1,10 @@
 #include "Notification.hpp"
 
 // Constructeur / Destructeur ///////////////////////////////////////////////////////////////////////////////////
+
+Notification::Notification()
+{}
+
 Notification::Notification(const string& _eqtID, const string& _title, const string& _description,
 							const unsigned int& _priority, const unsigned int& _id, bool _acked)
 	: eqtID(_eqtID), title(_title), description(_description), priority(_priority), id(_id), acked(_acked)

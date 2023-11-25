@@ -4,6 +4,8 @@
 #include "../../main.hpp"
 #include "User.hpp"
 
+using namespace std;
+
 class User;
 
 class Device
@@ -15,6 +17,7 @@ class Device
 
 	public:
 		// Constructeur / Destructeurs
+		Device();
     	Device(const string& _id, const string& _description);
 		~Device();
 

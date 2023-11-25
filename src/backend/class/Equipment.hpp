@@ -1,9 +1,11 @@
-#ifndef EQUIPEMENT_HPP
-#define EQUIPEMENT_HPP
+#ifndef EQUIPMENT_HPP
+#define EQUIPMENT_HPP
 
 #include "../../main.hpp"
 
-class Equipement
+using namespace std;
+
+class Equipment
 {
 	private:
 		string id;
@@ -12,8 +14,9 @@ class Equipement
 
 	public:
 		// Constructeur / Destructeurs
-    	Equipement(const string& _id, const string& _description, const string& _pairedUserID);
-		~Equipement();
+		Equipment();
+    	Equipment(const string& _id, const string& _description, const string& _pairedUserID);
+		~Equipment();
 
 		// Getters
 		string getId() const;
@@ -26,7 +29,7 @@ class Equipement
 		void setPairedUserID(const string& _pairedUserID);
 
 		// Opérateur de comparaison
-		bool operator==(const Equipement& other) const;
+		bool operator==(const Equipment& other) const;
 };
 
 #endif
