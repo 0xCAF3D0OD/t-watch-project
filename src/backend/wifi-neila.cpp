@@ -23,7 +23,7 @@ void wifi(TFT_eSPI *tft) {
     tft->fillScreen(TFT_BLACK);
     tft->setTextFont(2);
     tft->setTextColor(TFT_GREEN, TFT_BLACK);
-    tft->drawString("Connecting to WiFi...", 50, 100);
+    tft->drawString("Connected to WiFi", 50, 100);
   }
   
   // Effectuer une requête HTTP
