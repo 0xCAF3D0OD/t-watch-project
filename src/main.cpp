@@ -30,6 +30,26 @@ void btn3_click(void *param) {
 char buf[128];
 int analogValue = 0; 
 
+void set_font(TWatchClass **twatch, TFT_eSPI **tft) {
+  (*tft)->setTextFont(2);
+  (*tft)->setTextColor(TFT_WHITE, TFT_BLACK);
+  (*tft)->drawString("T-Watch Touch Test", 62, 90);
+  (*twatch)->motor_shake(2, 50);
+  (*tft)->fillScreen(TFT_BLACK);
+  (*twatch)->backlight_set_value(255);
+  (*twatch)->hal_auto_update(true, 1);
+}
+
+void buttonClick(TWatchClass **twatch, TFT_eSPI **tft) {
+  (*tft)->setTextFont(2);
+  (*tft)->setTextColor(TFT_BLACK, TFT_WHITE);
+  (*tft)->drawString("T-Watch Button Test", 62, 90);
+
+  (*twatch)->button_bind_event(TWATCH_BTN_1, BUTTON_CLICK, btn1_click, tft);
+  (*twatch)->button_bind_event(TWATCH_BTN_2, BUTTON_CLICK, btn2_click, tft);
+  (*twatch)->button_bind_event(TWATCH_BTN_3, BUTTON_CLICK, btn3_click, tft);
+}
+
 void setup() {
   analogValue = analogRead(0);
   twatch = TWatchClass::getWatch();
@@ -45,24 +65,8 @@ void setup() {
 
   twatch->hal_auto_update(true, 0);
 
-  tft->setTextFont(2);
-  tft->setTextColor(TFT_WHITE, TFT_BLACK);
-  tft->drawString("T-Watch Touch Test", 62, 90);
-  twatch->motor_shake(2, 50);
-
-  tft->fillScreen(TFT_BLACK);
-  twatch->backlight_set_value(255);
-
-  twatch->hal_auto_update(true, 1);
-
-  tft->setTextFont(2);
-  tft->setTextColor(TFT_BLACK, TFT_WHITE);
-  tft->drawString("T-Watch Button Test", 62, 90);
-
-  twatch->button_bind_event(TWATCH_BTN_1, BUTTON_CLICK, btn1_click, tft);
-  twatch->button_bind_event(TWATCH_BTN_2, BUTTON_CLICK, btn2_click, tft);
-  twatch->button_bind_event(TWATCH_BTN_3, BUTTON_CLICK, btn3_click, tft);
-
+  set_font(&twatch, &tft);
+  buttonClick(&twatch, &tft);
   backend(tft, twatch);
 }
 
@@ -93,4 +97,3 @@ void loop() {
   delay(20);
 
 }
-
