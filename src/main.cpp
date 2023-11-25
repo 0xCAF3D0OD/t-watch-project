@@ -33,16 +33,18 @@ void setup() {
   tft->setTextColor(TFT_WHITE, TFT_BLACK);
   tft->drawString("T-Watch Touch Test", 62, 90);
 
-  twatch->button_bind_event(TWATCH_BTN_1, BUTTON_CLICK, [](void *param) { clear_irq = true; });
+  twatch->button_bind_event(TWATCH_BTN_1, BUTTON_CLICK, [](void *param) { clear_irq = true; Serial.println("button1");});
+  // twatch->button_bind_event(TWATCH_BTN_2, BUTTON_CLICK, [](void *param) { clear_irq = true; Serial.println("button2");});
+  // twatch->button_bind_event(TWATCH_BTN_3, BUTTON_CLICK, [](void *param) { clear_irq = true; Serial.println("button3");});
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   if (xEventGroupGetBits(twatch->_Hal_IRQ_event) & TOUCH_IRQ_BIT) {
     xEventGroupClearBits(twatch->_Hal_IRQ_event, TOUCH_IRQ_BIT);
     point_x = twatch->touch_getX();
     point_y = twatch->touch_getY();
     sprintf(buf, "Hello World");
+    sprintf(buf, "ce sont les zouzous");
     tft->drawString(buf, 80, 118);
     if (!isline) {
       tft->drawPixel(point_x, point_y, color);
