@@ -3,6 +3,8 @@
 
 #include "../../main.hpp"
 
+using namespace std;
+
 class User
 {
 	private:
@@ -12,6 +14,7 @@ class User
 
 	public:
 		// Constructeur / Destructeurs
+		User();
     	User(const string& _id, const string& _cardID, const string& _name);
 		~User();
 

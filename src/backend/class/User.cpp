@@ -2,6 +2,8 @@
 
 // Constructeur / Destructeur /////////////////////////////////////////////////////////////////////////
 
+User::User(){}
+
 User::User(const string& _id, const string& _cardID, const string& _name)
 		: id(_id), cardID(_cardID), name(_name)
 {}

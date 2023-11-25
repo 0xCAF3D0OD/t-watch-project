@@ -2,6 +2,9 @@
 
 // Constructeur / Destructeur /////////////////////////////////////////////////////////////////////////
 
+Device::Device()
+{}
+
 Device::Device(const string& _id, const string& _description)
 		: id(_id), description(_description), pairedUserID("")
 {}

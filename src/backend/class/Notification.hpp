@@ -3,6 +3,8 @@
 
 #include "../../main.hpp"
 
+using namespace std;
+
 class Notification
 {
 	private:
@@ -15,6 +17,7 @@ class Notification
 
 	public:
 		// Constructeur / Destructeurs
+		Notification();
     	Notification(const string& _eqtID, const string& _title, const string& _description,
 						const unsigned int& _priority, const unsigned int& _id, bool _acked);
 		~Notification();

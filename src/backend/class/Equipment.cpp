@@ -1,51 +1,54 @@
-#include "Equipement.hpp"
+#include "Equipment.hpp"
 
 // Constructeur / Destructeur /////////////////////////////////////////////////////////////////////////
 
-Equipement::Equipement(const string& _id, const string& _description, const string& _pairedUserID)
+Equipment::Equipment()
+{}
+
+Equipment::Equipment(const string& _id, const string& _description, const string& _pairedUserID)
 		: id(_id), description(_description), pairedUserID(_pairedUserID)
 {}
 
-Equipement::~Equipement()
+Equipment::~Equipment()
 {}
 
 // Getters ////////////////////////////////////////////////////////////////////////////////////////////
 
-string Equipement::getId() const
+string Equipment::getId() const
 {
 	return id;
 }
 
-string Equipement::getDescription() const
+string Equipment::getDescription() const
 {
 	return description;
 }
 
-string Equipement::getPairedUserID() const
+string Equipment::getPairedUserID() const
 {
 	return pairedUserID;
 }
 
 // Setters ////////////////////////////////////////////////////////////////////////////////////////////
 
-void Equipement::setId(const string& _id)
+void Equipment::setId(const string& _id)
 {
 	id = _id;
 }
 
-void Equipement::setDescription(const string& _description)
+void Equipment::setDescription(const string& _description)
 {
 	description = _description;
 }
 
-void Equipement::setPairedUserID(const string& _pairedUserID)
+void Equipment::setPairedUserID(const string& _pairedUserID)
 {
 	pairedUserID = _pairedUserID;
 }
 
 // Opérateur de comparaison ///////////////////////////////////////////////////////////////////////////
 
-bool Equipement::operator==(const Equipement& other) const
+bool Equipment::operator==(const Equipment& other) const
 {
 	return id == other.id && description == other.description && pairedUserID == other.pairedUserID;
 }
