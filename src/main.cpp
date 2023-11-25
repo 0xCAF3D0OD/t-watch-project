@@ -4,6 +4,14 @@
 TWatchClass *twatch = nullptr;
 TFT_eSPI *tft = nullptr;
 
+
+bool clear_irq = false;
+uint16_t color;
+uint8_t fill_order = 0;
+bool isline = false;
+int16_t last_x, last_y;
+uint16_t point_x, point_y;
+
 char buf[128];
 int analogValue = 0; 
 
@@ -25,7 +33,7 @@ void setup() {
   tft->setTextFont(2);
   tft->setTextColor(TFT_WHITE, TFT_BLACK);
   tft->drawString("T-Watch Touch Test", 62, 90);
-  backend();
+  backend(tft);
 }
 
 void loop() {
@@ -33,6 +41,7 @@ void loop() {
     xEventGroupClearBits(twatch->_Hal_IRQ_event, TOUCH_IRQ_BIT);
     tft->drawString(buf, 80, 118);
   }
-  Serial.print("1");
+  // Serial.print("1");
   delay(20);
 }
+

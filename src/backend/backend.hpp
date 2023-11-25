@@ -3,7 +3,8 @@
 
 #include "../main.hpp"
 
-void	backend();
+void	backend(TFT_eSPI *twatch);
+void    wifi(TFT_eSPI *tft);
 // rfid.cpp
 void	rfid();
 
