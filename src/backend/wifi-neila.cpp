@@ -10,7 +10,7 @@ const char* password = "Manufacturing2023!";
 
 void wifi(TFT_eSPI *tft) {
   Serial.println("Hello World");
-  
+
   bool ok = false;
   // Connexion au Wi-Fi
   WiFi.begin(ssid, password);
@@ -19,13 +19,13 @@ void wifi(TFT_eSPI *tft) {
     ok = true;
   }
 
-  if (ok) 
+  if (ok)
   {
     tft->fillScreen(TFT_BLACK);
     tft->setTextFont(2);
     tft->setTextColor(TFT_GREEN, TFT_BLACK);
     // tft->drawString("Connected to WiFi", 50, 30);
-	
+
 	// test User //////////////////////////////////////////////////////////
 	// User user;
 	// getRequestUser("http://mes.42lausanne.ch/api/v1/User/001", user);
@@ -58,6 +58,6 @@ void wifi(TFT_eSPI *tft) {
 	// if (notification.getAcked())
 	// 	tft->drawString("true", 50, 170);
 	// else
-	// 	tft->drawString("false", 50, 170);	
+	// 	tft->drawString("false", 50, 170);
   }
 }
