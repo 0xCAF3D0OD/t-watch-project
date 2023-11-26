@@ -24,6 +24,10 @@ class Notification;
 #include "backend/backend.hpp"
 #include "frontend/frontend.hpp"
 
+//lv_obj_t* header; // Ajout du header
+// lv_obj_t* notification_container; // Ajout du conteneur des notifications
+
+
 using namespace std;
 
 void	setup();

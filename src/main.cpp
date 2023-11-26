@@ -4,9 +4,52 @@ lv_obj_t* accepte;
 TWatchClass *twatch = nullptr;
 TFT_eSPI *tft = nullptr;
 
+lv_obj_t* header; // Ajout du header
+lv_obj_t* notification_container; // Ajout du conteneur des notifications
+
+
+int currentNotification = 0; // Indice de la notification actuelle
 int btn3Pressed = 0;
 int btn2Pressed = 0;
 int btn1Pressed = 0;
+
+static void textarea_event_handler(lv_event_t * e)
+{
+    lv_obj_t * ta = lv_event_get_target(e);
+    LV_LOG_USER("Enter was pressed. The current text is: %s", lv_textarea_get_text(ta));
+}
+
+//test
+void create_notification(const char* text, int y_offset) {
+    lv_obj_t* notification = lv_textarea_create(notification_container);
+    lv_textarea_set_text(notification, text);
+    lv_obj_align(notification, LV_ALIGN_TOP_MID, 0, y_offset);
+    lv_obj_add_event_cb(notification, textarea_event_handler, LV_EVENT_READY, notification);
+}
+
+void lv_example_textarea_1(void)
+{
+    notification_container = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(notification_container, LV_HOR_RES, LV_VER_RES - 50); // Hauteur de l'écran moins la taille du header
+    lv_obj_align(notification_container, LV_ALIGN_TOP_MID, 0, 50);
+
+    // Création du header
+    header = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(header, LV_HOR_RES, 50); // Hauteur du header
+    lv_obj_align(header, LV_ALIGN_TOP_MID, 0, 0);
+    
+    // Ajout d'un label pour l'ID dans le header
+    lv_obj_t* id_label = lv_label_create(header);
+    lv_label_set_text(id_label, "Votre ID"); // Remplacez par votre ID
+    lv_obj_align(id_label, LV_ALIGN_TOP_MID, 0, 10);
+
+	    // Création de 5 notifications initiales
+    create_notification("Notification 1", 10);
+    create_notification("Notification 2", 60);
+    create_notification("Notification 3", 110);
+    create_notification("Notification 4", 160);
+    create_notification("Notification 5", 210);
+}
 
 void btn1_click(void *param) {
   btn1Pressed = 1;  
@@ -20,6 +63,11 @@ void btn2_click(void *param) {
   Serial.println("BTN2 Click");
   tft->drawString("BTN2 Click", 80, 118);
   twatch->motor_shake(2, 50);
+    // Défilement vers le haut
+  if (currentNotification > 0) {
+    currentNotification--;
+    lv_obj_align(notification_container, LV_ALIGN_TOP_MID, 0, 50 + (currentNotification * 50));
+  }
 }
 
 void btn3_click(void *param) {
@@ -27,7 +75,12 @@ void btn3_click(void *param) {
   Serial.println(btn3Pressed);
   tft->drawString("BTN3 Click", 80, 118);
   twatch->motor_shake(2, 50);
-  lv_scr_load(accepte);
+//   lv_scr_load(accepte);
+    // Défilement vers le bas
+  if (currentNotification < 4) {
+    currentNotification++;
+    lv_obj_align(notification_container, LV_ALIGN_TOP_MID, 0, 50 + (currentNotification * 50));
+  }
 }
 
 char buf[128];
