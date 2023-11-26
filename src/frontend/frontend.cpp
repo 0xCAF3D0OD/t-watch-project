@@ -2,10 +2,10 @@
 
 void lv_example_get_started_1(void)
 {
-    /*Change the active screen's background color*/
+    // Change la couleur de fond de l'écran actif
     lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0x003a57), LV_PART_MAIN);
 
-    /*Create a white label, set its text and align it to the center*/
+    //Crée un label blanc, définit son texte et l'aligne au centre
     lv_obj_t * label = lv_label_create(lv_scr_act());
     lv_label_set_text(label, "Hello world");
     lv_obj_set_style_text_color(lv_scr_act(), lv_color_hex(0xffffff), LV_PART_MAIN);
