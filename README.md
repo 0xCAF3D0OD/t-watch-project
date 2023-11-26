@@ -37,7 +37,7 @@ Les constantes ssid et password sont définies pour se connecter au réseau Wi-F
 
 3. Requête HTTP :
 
-Une requête HTTP est envoyée à l'URL spécifiée (http://mes.42lausanne.ch/api/v1/Device). Si la requête réussit (httpCode > 0), la réponse est stockée dans la variable response. En cas d'échec, un message d'erreur est affiché.
-<br />Traitement de la Réponse HTTP : Le code contient un emplacement pour traiter la réponse reçue de la requête HTTP, potentiellement en utilisant ArduinoJson pour analyser les données JSON.
+Une requête HTTP est envoyée à l'URL spécifiée. Si la requête réussit (httpCode > 0), la réponse est stockée dans la variable response. En cas d'échec, un message d'erreur est affiché.
+<br />Traitement de la Réponse HTTP : Le code contient un emplacement pour traiter la réponse reçue de la requête HTTP.
 <br />Clôture de la Requête HTTP : La connexion HTTP est terminée avec http.end(), libérant les ressources réseau.
 
