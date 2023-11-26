@@ -18,6 +18,9 @@ class Device;
 class Equipment;
 class Notification;
 
+lv_obj_t* notification_container; // Ajout du conteneur des notifications
+
+
 //"TWatch_config.h" needs to be configured in the library for the first time
 // This routine needs to annotate the LVGL GUI
 
@@ -32,5 +35,11 @@ using namespace std;
 
 void	setup();
 void	loop();
+void    btn1_click(void *param);
+void    btn2_click(void *param);
+void    btn3_click(void *param);
+void    front_ui(); 
+void    set_font(TWatchClass **twatch, TFT_eSPI **tft);
+void    buttonClick(TWatchClass **twatch, TFT_eSPI **tft);
 
 #endif

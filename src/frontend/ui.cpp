@@ -1,92 +1,90 @@
-// // #include "globals.hpp"
-// // #include "EqtMiniMap.hpp"
-// // #include "EqtStatusUI.hpp"
-// #include "frontend/frontend.hpp"
+#include "frontend.hpp"
+#include "../main.hpp"
 
-// lv_obj_t screen;
-// lv_obj_tname_label = NULL;
-// lv_obj_t status_label;
-// lv_obj_tdesc_label;
-// lv_obj_t notif_popup;
-// EqtMiniMapmini_map;
+lv_obj_t* accepte;
+lv_obj_t* header; // Ajout du header
+lv_obj_t* notification_container; // Ajout du conteneur des notifications
 
-// void displaymain_setup()
-// {
-//     screen = lv_obj_create(NULL);
-//     lv_obj_clear_flag(screen, LV_OBJ_FLAG_SCROLLABLE);
-//     static lv_style_t name_style;
-//     lv_style_init(&name_style);
+// Gestionnaire d'événements pour les objets de type "textarea" de LVGL
+// Il est appelé lorsque l'événement LV_EVENT_READY est déclenché sur un textarea
+static void textarea_event_handler(lv_event_t * e)
+{
+    lv_obj_t * ta = lv_event_get_target(e);
+    LV_LOG_USER("Enter was pressed. The current text is: %s", lv_textarea_get_text(ta));
+}
 
-//     name_label = lv_label_create(screen);
-//     lv_label_set_text(name_label, "No Machine select");
-//     lv_obj_add_style(name_label, &name_style, 0);
-//     lv_style_set_text_font(&name_style, &lv_font_montserrat_20);
-//     lv_style_set_text_color(&name_style, lv_color_black());
-//     lv_obj_align(name_label, LV_ALIGN_CENTER, 0, -80);
+// Crée une nouvelle notification et l'ajoute au conteneur de notifications
+void create_notification(const char* text, int y_offset) {
+    lv_obj_t* notification = lv_textarea_create(notification_container);
+    lv_textarea_set_text(notification, text);
+    lv_obj_set_width(notification, 190);
+    lv_obj_align(notification, LV_ALIGN_TOP_MID, 0, y_offset);
+    lv_obj_add_event_cb(notification, textarea_event_handler, LV_EVENT_READY, notification);
+}
 
-//     static lv_style_t status_style;
-//     lv_style_init(&status_style);
+// Crée le conteneur de notifications, le header, et ajoute des notifications au conteneur
+void lv_example_textarea_1(void)
+{
+    notification_container = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(notification_container, LV_HOR_RES, LV_VER_RES - 50); // Hauteur de l'écran moins la taille du header
+    lv_obj_align(notification_container, LV_ALIGN_TOP_MID, 0, 50);
 
-//     status_label = lv_label_create(screen);
-//     lv_label_set_text(status_label, "No Status to report");
-//     lv_obj_add_style(status_label, &status_style, 0);
-//     lv_style_set_text_font(&status_style, &lv_font_montserrat_16);
-//     lv_style_set_text_color(&status_style, lv_color_black());
-//     lv_obj_align(status_label, LV_ALIGN_CENTER, 0, -60);
+    // Création du header
+    header = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(header, LV_HOR_RES, 50); // Hauteur du header
+    lv_obj_align(header, LV_ALIGN_TOP_MID, 0, 0);
+    
+    // Ajout d'un label pour l'ID dans le header
+    lv_obj_t* id_label = lv_label_create(header);
+    lv_label_set_text(id_label, "Votre ID"); // Remplacez par votre ID
+    lv_obj_align(id_label, LV_ALIGN_TOP_MID, 0, 10);
 
-//     desc_label = lv_label_create(screen);
-//     lv_label_set_text(desc_label, "Put description here");
-//     lv_obj_add_style(desc_label, &status_style, 0);
-//     lv_obj_align(desc_label, LV_ALIGN_CENTER, 0, -15);
+    // Récupération des notifications depuis l'URL de l'API
+    std::vector<Notification> notifs;
+    string url = "http://mes.42lausanne.ch/api/v1/Notification/";
+    for (int i = 1167; i < 1177; i++)
+    {
+        Notification temp;
+        string stemp = url + std::to_string(i);
+        getRequestNotification(stemp.c_str(), temp);
+        notifs.push_back(temp);
+    }
 
-//     notif_popup = lv_obj_create(screen);
-//     lv_obj_set_style_bg_color(notif_popup, lv_palette_main(LV_PALETTE_RED), 0);
+    int y = 10;
+    for (std::vector<Notification>::iterator it = notifs.begin(); it != notifs.end(); ++it)
+    {
+        create_notification(it->getTitle().c_str(), y);
+        y += 50;
+    }
+}
 
-//     static lv_style_t exclamation_style;
-//     lv_style_init(&exclamation_style);
+// Initialise l'interface utilisateur de l'application
+void front_ui() {
+  lv_example_get_started_1();
+  lv_example_textarea_1();
+  accepte = lv_obj_create(NULL); /*Create a parent object on the current screen*/
+  lv_obj_set_size(accepte, 80, 50);
+  lv_obj_align(accepte, LV_ALIGN_CENTER, 0, 0);
+}
 
-//     lv_obj_t *exclamation = lv_label_create(notif_popup);
-//     lv_obj_add_style(exclamation, &exclamation_style, 0);
-//     lv_label_set_text(exclamation, "!");
-//     lv_style_set_text_color(&exclamation_style, lv_color_white());
-//     lv_obj_set_align(exclamation, LV_ALIGN_CENTER);
+// Initialise l'affichage de la montre
+void set_font(TWatchClass **twatch, TFT_eSPI **tft) {
+  (*tft)->setTextFont(2);
+  (*tft)->setTextColor(TFT_WHITE, TFT_BLACK);
+  (*tft)->drawString("T-Watch Touch Test", 62, 90);
+  (*twatch)->motor_shake(2, 50);
+  (*tft)->fillScreen(TFT_BLACK);
+  (*twatch)->backlight_set_value(255);
+  (*twatch)->hal_auto_update(true, 0);
+}
 
-//    // Setup transform
-//     lv_obj_set_size(notif_popup, 20, 20);
-//     lv_obj_set_x(notif_popup, 210);
-//     lv_obj_set_y(notif_popup, 65);
-// }
+// Lie les boutons à leurs gestionnaires d'événements respectifs
+void buttonClick(TWatchClass **twatch, TFT_eSPI **tft) {
+  (*tft)->setTextFont(2);
+  (*tft)->setTextColor(TFT_BLACK, TFT_WHITE);
+  (*tft)->drawString("T-Watch Button Test", 62, 90);
 
-// void init_mini_man()
-// {
-//     mini_map = new EqtMiniMap(screen, eqt_count);
-// }
-
-// void displaymain_display()
-// {
-//     // Serial.printf("eqts: id: %d, count: %d, size: %d\n", eqt_index, eqt_count, eqt_list.size());
-//     // Serial.printf("description: %s\n", eqt_list[eqt_index].description.c_str());
-//     // char lol = (char)calloc(1000, 1);
-//     // memcpy(lol, eqt_list[eqt_index].description.c_str(), strlen(eqt_list[eqt_index].description.c_str()));
-//     // Serial.printf("ewdwdd, %s\n", lol);
-//     if (name_label)
-//     {
-//         lv_label_set_text(name_label, eqt_list[eqt_index].description.c_str());
-//         //free(lol);
-//         if (notif_map.size() > 0) {
-//             Serial.printf(WARN "cursed: %d\n", notif_map[eqt_list[eqt_index].id].size());
-//             if (notif_map[eqt_list[eqt_index].id].size() > 0) {
-//                 lv_label_set_text(status_label, notif_map[eqt_list[eqt_index].id][0].title.c_str());
-//                 Serial.printf("id: %d, title: %s\n", eqt_index, notif_map[eqt_list[eqt_index].id][0].title.c_str());
-//             } else {
-//                 lv_label_set_text(status_label, "--");
-//                 Serial.printf("title: --\n");
-//             }
-//         }
-//     }
-//     mini_map->setCurrent(eqt_index);
-//     if (lv_scr_act() != screen)
-//         lv_scr_load(screen);
-// }
-
-// ´´´
+  (*twatch)->button_bind_event(TWATCH_BTN_1, BUTTON_CLICK, btn1_click);
+  (*twatch)->button_bind_event(TWATCH_BTN_2, BUTTON_CLICK, btn2_click);
+  (*twatch)->button_bind_event(TWATCH_BTN_3, BUTTON_CLICK, btn3_click);
+}
