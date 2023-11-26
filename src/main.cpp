@@ -1,4 +1,5 @@
 #include "main.hpp"
+lv_obj_t* pg_accueil = lv_obj_create();
 TWatchClass *twatch = nullptr;
 TFT_eSPI *tft = nullptr;
 
@@ -59,8 +60,10 @@ void setup() {
   backend(tft, twatch);
   lv_example_get_started_1();
   lv_example_textarea_1();
+  lv_scr_load();
 }
 
 void loop() {
+
   delay(20);
 }
