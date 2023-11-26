@@ -24,7 +24,7 @@ void wifi(TFT_eSPI *tft) {
     tft->fillScreen(TFT_BLACK);
     tft->setTextFont(2);
     tft->setTextColor(TFT_GREEN, TFT_BLACK);
-    tft->drawString("Connected to WiFi", 50, 30);
+    // tft->drawString("Connected to WiFi", 50, 30);
 	
 	// test User //////////////////////////////////////////////////////////
 	// User user;
