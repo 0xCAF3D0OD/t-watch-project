@@ -1,5 +1,6 @@
 #include "main.hpp"
 
+
 lv_obj_t* accepte;
 TWatchClass *twatch = nullptr;
 TFT_eSPI *tft = nullptr;
@@ -23,6 +24,7 @@ static void textarea_event_handler(lv_event_t * e)
 void create_notification(const char* text, int y_offset) {
     lv_obj_t* notification = lv_textarea_create(notification_container);
     lv_textarea_set_text(notification, text);
+	lv_obj_set_width(notification, 190);
     lv_obj_align(notification, LV_ALIGN_TOP_MID, 0, y_offset);
     lv_obj_add_event_cb(notification, textarea_event_handler, LV_EVENT_READY, notification);
 }
@@ -43,12 +45,30 @@ void lv_example_textarea_1(void)
     lv_label_set_text(id_label, "Votre ID"); // Remplacez par votre ID
     lv_obj_align(id_label, LV_ALIGN_TOP_MID, 0, 10);
 
+	// recup backend notif
+	std::vector<Notification> notifs;
+	string url = "http://mes.42lausanne.ch/api/v1/Notification/";
+	for (int i = 1167; i < 1177; i++)
+	{
+		Notification temp;
+		string stemp = url + std::to_string(i);
+		getRequestNotification(stemp.c_str(), temp);
+		notifs.push_back(temp);
+	}
+
+	int y = 10;
+	for (std::vector<Notification>::iterator it = notifs.begin(); it != notifs.end(); ++it)
+	{
+		create_notification(it->getTitle().c_str(), y);
+		y += 50;
+	}
 	    // Création de 5 notifications initiales
-    create_notification("Notification 1", 10);
-    create_notification("Notification 2", 60);
-    create_notification("Notification 3", 110);
-    create_notification("Notification 4", 160);
-    create_notification("Notification 5", 210);
+    // create_notification("Notification 1", 10);
+    // create_notification("Notification 2", 60);
+    // create_notification("Notification 3", 110);
+    // create_notification("Notification 4", 160);
+    // create_notification("Notification 5", 210);
+
 }
 
 void btn1_click(void *param) {
