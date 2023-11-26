@@ -54,3 +54,19 @@ les url api que nous avons juger utiles et prioritaire à implémenter sont : ht
         - .../api/v1/Pairing/DeletePairingUserDeviceByDeviceId
 
 4. Front
+
+ Est une collection de fonctions utilisées pour créer une interface utilisateur pour une application sur un appareil TTGO T-Watch. Il utilise la bibliothèque LVGL pour créer des éléments d'interface utilisateur et gérer les interactions avec l'utilisateur.
+
+   1. `textarea_event_handler(lv_event_t * e)` : Cette fonction est un gestionnaire d'événements pour les objets de type "textarea" de LVGL. Elle est déclenchée lorsqu'un événement spécifique se produit sur un "textarea", et affiche le texte actuel du "textarea".
+
+   2. `create_notification(const char* text, int y_offset)` : Cette fonction crée une nouvelle notification dans un conteneur de notifications. Elle prend en paramètre le texte de la notification et le décalage en y de la notification dans le conteneur.
+
+   3. `lv_example_textarea_1(void)` : Cette fonction initialise le conteneur de notifications et le header, puis récupère les notifications depuis une URL d'API et crée une notification pour chaque élément récupéré.
+
+   4. `front_ui()` : Cette fonction initialise l'interface utilisateur de l'application. Elle appelle d'autres fonctions pour créer différentes parties de l'interface utilisateur.
+
+   5. `set_font(TWatchClass **twatch, TFT_eSPI **tft)` : Cette fonction configure l'affichage de la montre. Elle définit la police de caractères, la couleur du texte, et le texte à afficher.
+
+   6. `buttonClick(TWatchClass **twatch, TFT_eSPI **tft) `: Cette fonction lie les boutons de la montre à leurs gestionnaires d'événements respectifs.
+
+En résumé, il comprend des fonctions pour créer des **notifications**, **configurer l'affichage de la montre**, **lier les boutons à des gestionnaires d'événements**, et **initialiser l'interface utilisateur de l'application.**
