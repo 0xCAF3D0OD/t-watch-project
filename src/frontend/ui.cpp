@@ -5,21 +5,24 @@ lv_obj_t* accepte;
 lv_obj_t* header; // Ajout du header
 lv_obj_t* notification_container; // Ajout du conteneur des notifications
 
+// Gestionnaire d'événements pour les objets de type "textarea" de LVGL
+// Il est appelé lorsque l'événement LV_EVENT_READY est déclenché sur un textarea
 static void textarea_event_handler(lv_event_t * e)
 {
     lv_obj_t * ta = lv_event_get_target(e);
     LV_LOG_USER("Enter was pressed. The current text is: %s", lv_textarea_get_text(ta));
 }
 
-//test
+// Crée une nouvelle notification et l'ajoute au conteneur de notifications
 void create_notification(const char* text, int y_offset) {
     lv_obj_t* notification = lv_textarea_create(notification_container);
     lv_textarea_set_text(notification, text);
-	lv_obj_set_width(notification, 190);
+    lv_obj_set_width(notification, 190);
     lv_obj_align(notification, LV_ALIGN_TOP_MID, 0, y_offset);
     lv_obj_add_event_cb(notification, textarea_event_handler, LV_EVENT_READY, notification);
 }
 
+// Crée le conteneur de notifications, le header, et ajoute des notifications au conteneur
 void lv_example_textarea_1(void)
 {
     notification_container = lv_obj_create(lv_scr_act());
@@ -36,27 +39,26 @@ void lv_example_textarea_1(void)
     lv_label_set_text(id_label, "Votre ID"); // Remplacez par votre ID
     lv_obj_align(id_label, LV_ALIGN_TOP_MID, 0, 10);
 
-	// recup backend notif
-	std::vector<Notification> notifs;
-	string url = "http://mes.42lausanne.ch/api/v1/Notification/";
-	for (int i = 1167; i < 1177; i++)
-	{
-		Notification temp;
-		string stemp = url + std::to_string(i);
-		getRequestNotification(stemp.c_str(), temp);
-		notifs.push_back(temp);
-	}
+    // Récupération des notifications depuis l'URL de l'API
+    std::vector<Notification> notifs;
+    string url = "http://mes.42lausanne.ch/api/v1/Notification/";
+    for (int i = 1167; i < 1177; i++)
+    {
+        Notification temp;
+        string stemp = url + std::to_string(i);
+        getRequestNotification(stemp.c_str(), temp);
+        notifs.push_back(temp);
+    }
 
-	int y = 10;
-	for (std::vector<Notification>::iterator it = notifs.begin(); it != notifs.end(); ++it)
-	{
-		create_notification(it->getTitle().c_str(), y);
-		y += 50;
-	}
+    int y = 10;
+    for (std::vector<Notification>::iterator it = notifs.begin(); it != notifs.end(); ++it)
+    {
+        create_notification(it->getTitle().c_str(), y);
+        y += 50;
+    }
 }
 
-char buf[128];
-
+// Initialise l'interface utilisateur de l'application
 void front_ui() {
   lv_example_get_started_1();
   lv_example_textarea_1();
@@ -65,6 +67,7 @@ void front_ui() {
   lv_obj_align(accepte, LV_ALIGN_CENTER, 0, 0);
 }
 
+// Initialise l'affichage de la montre
 void set_font(TWatchClass **twatch, TFT_eSPI **tft) {
   (*tft)->setTextFont(2);
   (*tft)->setTextColor(TFT_WHITE, TFT_BLACK);
@@ -75,6 +78,7 @@ void set_font(TWatchClass **twatch, TFT_eSPI **tft) {
   (*twatch)->hal_auto_update(true, 0);
 }
 
+// Lie les boutons à leurs gestionnaires d'événements respectifs
 void buttonClick(TWatchClass **twatch, TFT_eSPI **tft) {
   (*tft)->setTextFont(2);
   (*tft)->setTextColor(TFT_BLACK, TFT_WHITE);
