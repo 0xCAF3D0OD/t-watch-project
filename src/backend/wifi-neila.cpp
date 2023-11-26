@@ -1,5 +1,8 @@
+#include <WiFi.h>
+#include <HTTPClient.h>
+// #include <ArduinoJson.h>
+#include <TWatch_hal.h>
 
-#include "backend.hpp"
 
 // Paramètres Wi-Fi
 const char* ssid = "Manufacturing Lab";

@@ -1,7 +1,6 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
-#include <Arduino.h>
 #include <TWatch_hal.h>
 #include <iostream>
 #include <string>
@@ -23,6 +22,7 @@ class Notification;
 // This routine needs to annotate the LVGL GUI
 
 #include "backend/backend.hpp"
+#include "frontend/frontend.hpp"
 
 using namespace std;
 
