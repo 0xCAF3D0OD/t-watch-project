@@ -41,3 +41,16 @@ Une requête HTTP est envoyée à l'URL spécifiée. Si la requête réussit (ht
 <br />Traitement de la Réponse HTTP : Le code contient un emplacement pour traiter la réponse reçue de la requête HTTP.
 <br />Clôture de la Requête HTTP : La connexion HTTP est terminée avec http.end(), libérant les ressources réseau.
 
+les url api que nous avons juger utiles et prioritaire à implémenter sont : http://mes.42lausanne.ch ...
+
+  GET :
+        - .../api/v1/Device/{id}
+        - .../api/v1/User/{id}
+        - .../api/v1/Equipment/{id}
+        - .../api/v1/Notification/{id}
+  POST :
+        - .../api/v1/Notification/Ack/{id}
+        - .../api/v1/Pairing/PairingUserDevice
+        - .../api/v1/Pairing/DeletePairingUserDeviceByDeviceId
+
+4. Front
