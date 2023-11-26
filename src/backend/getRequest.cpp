@@ -1,22 +1,26 @@
 #include "backend.hpp"
 
-void	getRequestUser(std::string url, User &user)
+// Fonction pour effectuer une requête GET et récupérer un utilisateur
+void getRequestUser(std::string url, User &user)
 {
-	// Effectuer une requête HTTP
+    // Initialiser un client HTTP
     HTTPClient http;
 
+    // Commencer la connexion HTTP avec l'URL spécifiée
     http.begin(url.c_str());
     int httpCode = http.GET();
 
+    // Vérifier si la requête a réussi
     if (httpCode > 0)
     {
+        // Lire la réponse de la requête
         String response = http.getString();
 
-        // Traiter la réponse ici
-        DynamicJsonDocument jsonDoc(1024); // Définissez la taille du document JSON en fonction de vos besoins
+        // Traiter la réponse JSON
+        DynamicJsonDocument jsonDoc(1024);
         deserializeJson(jsonDoc, response);
 
-        // Assurez-vous que les champs "id", "cardId" et "name" existent dans la réponse JSON
+        // Vérifier la présence des clés nécessaires dans la réponse JSON
         if (jsonDoc.containsKey("id") && jsonDoc.containsKey("cardId") && jsonDoc.containsKey("name"))
         {
             // Initialiser l'objet User avec les valeurs de la réponse JSON
@@ -24,36 +28,39 @@ void	getRequestUser(std::string url, User &user)
             user.setCardID(jsonDoc["cardId"]);
             user.setName(jsonDoc["name"]);
         }
-
         http.end();
     }
     else
     {
-        // error handling
+        // Gérer les erreurs de la requête
         http.end();
     }
 }
 
-void	getRequestDevise(std::string url, Device &device)
+// Fonction pour effectuer une requête GET et récupérer un dispositif
+void getRequestDevise(std::string url, Device &device)
 {
-	// Effectuer une requête HTTP
+    // Initialiser un client HTTP
     HTTPClient http;
 
+    // Commencer la connexion HTTP avec l'URL spécifiée
     http.begin(url.c_str());
     int httpCode = http.GET();
 
+    // Vérifier si la requête a réussi
     if (httpCode > 0)
     {
+        // Lire la réponse de la requête
         String response = http.getString();
 
-        // Traiter la réponse ici
-        DynamicJsonDocument jsonDoc(1024); // Définissez la taille du document JSON en fonction de vos besoins
+        // Traiter la réponse JSON
+        DynamicJsonDocument jsonDoc(1024);
         deserializeJson(jsonDoc, response);
 
-        // Assurez-vous que les champs "id", "cardId" et "name" existent dans la réponse JSON
+        // Vérifier la présence des clés nécessaires dans la réponse JSON
         if (jsonDoc.containsKey("id") && jsonDoc.containsKey("description") && jsonDoc.containsKey("pairedUserId"))
         {
-            // Initialiser l'objet User avec les valeurs de la réponse JSON
+            // Initialiser l'objet Device avec les valeurs de la réponse JSON
             device.setId(jsonDoc["id"]);
             device.setDescription(jsonDoc["description"]);
             device.setPairedUserID(jsonDoc["pairedUserId"]);
@@ -63,31 +70,35 @@ void	getRequestDevise(std::string url, Device &device)
     }
     else
     {
-        // error handling
+        // Gérer les erreurs de la requête
         http.end();
     }
 }
 
-void	getRequestEquipment(std::string url, Equipment &equipment)
+// Fonction pour effectuer une requête GET et récupérer un équipement
+void getRequestEquipment(std::string url, Equipment &equipment)
 {
-	// Effectuer une requête HTTP
+    // Initialiser un client HTTP
     HTTPClient http;
 
+    // Commencer la connexion HTTP avec l'URL spécifiée
     http.begin(url.c_str());
     int httpCode = http.GET();
 
+    // Vérifier si la requête a réussi
     if (httpCode > 0)
     {
+        // Lire la réponse de la requête
         String response = http.getString();
 
-        // Traiter la réponse ici
-        DynamicJsonDocument jsonDoc(1024); // Définissez la taille du document JSON en fonction de vos besoins
+        // Traiter la réponse JSON
+        DynamicJsonDocument jsonDoc(1024);
         deserializeJson(jsonDoc, response);
 
-        // Assurez-vous que les champs "id", "cardId" et "name" existent dans la réponse JSON
+        // Vérifier la présence des clés nécessaires dans la réponse JSON
         if (jsonDoc.containsKey("id") && jsonDoc.containsKey("description") && jsonDoc.containsKey("pairedUserId"))
         {
-            // Initialiser l'objet User avec les valeurs de la réponse JSON
+            // Initialiser l'objet Equipment avec les valeurs de la réponse JSON
             equipment.setId(jsonDoc["id"]);
             equipment.setDescription(jsonDoc["description"]);
             equipment.setPairedUserID(jsonDoc["pairedUserId"]);
@@ -97,32 +108,36 @@ void	getRequestEquipment(std::string url, Equipment &equipment)
     }
     else
     {
-        // error handling
+        // Gérer les erreurs de la requête
         http.end();
     }
 }
 
-void	getRequestNotification(std::string url, Notification &notification)
+// Fonction pour effectuer une requête GET et récupérer une notification
+void getRequestNotification(std::string url, Notification &notification)
 {
-	// Effectuer une requête HTTP
+    // Initialiser un client HTTP
     HTTPClient http;
 
+    // Commencer la connexion HTTP avec l'URL spécifiée
     http.begin(url.c_str());
     int httpCode = http.GET();
 
+    // Vérifier si la requête a réussi
     if (httpCode > 0)
     {
+        // Lire la réponse de la requête
         String response = http.getString();
 
-        // Traiter la réponse ici
-        DynamicJsonDocument jsonDoc(1024); // Définissez la taille du document JSON en fonction de vos besoins
+        // Traiter la réponse JSON
+        DynamicJsonDocument jsonDoc(1024);
         deserializeJson(jsonDoc, response);
 
-        // Assurez-vous que les champs "id", "cardId" et "name" existent dans la réponse JSON
-        if (jsonDoc.containsKey("eqtId") && jsonDoc.containsKey("title") && jsonDoc.containsKey("description")
-				&& jsonDoc.containsKey("priority") && jsonDoc.containsKey("id") && jsonDoc.containsKey("acked"))
+        // Vérifier la présence des clés nécessaires dans la réponse JSON
+        if (jsonDoc.containsKey("eqtId") && jsonDoc.containsKey("title") && jsonDoc.containsKey("description") &&
+            jsonDoc.containsKey("priority") && jsonDoc.containsKey("id") && jsonDoc.containsKey("acked"))
         {
-            // Initialiser l'objet User avec les valeurs de la réponse JSON
+            // Initialiser l'objet Notification avec les valeurs de la réponse JSON
             notification.setEqtID(jsonDoc["eqtId"]);
             notification.setTitle(jsonDoc["title"]);
             notification.setDescription(jsonDoc["description"]);
@@ -135,7 +150,7 @@ void	getRequestNotification(std::string url, Notification &notification)
     }
     else
     {
-        // error handling
+        // Gérer les erreurs de la requête
         http.end();
     }
 }
