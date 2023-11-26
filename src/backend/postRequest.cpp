@@ -91,3 +91,4 @@ void postRequestPairingDelete(const string& deviceId)
         http.end();
     }
 }
+
